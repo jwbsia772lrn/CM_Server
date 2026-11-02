@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Mscc.GenerativeAI" Version="3.1.0" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.26301" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.301" />
   </ItemGroup>
 
 </Project>

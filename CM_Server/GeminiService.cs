@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Mscc.GenerativeAI;
 using Mscc.GenerativeAI.Types;
 
@@ -14,7 +14,14 @@ public class GeminiService
                   ?? throw new InvalidOperationException("Gemini API 키가 설정되지 않았습니다.");
     }
 
-    public async Task<string> GenerateReplyAsync(string personaInstruction, string lang, string userMessage)
+    /// <summary>
+    /// 슬라이딩 윈도우 기반 이전 대화 컨텍스트(최대 20개)를 포함하여 Gemini 응답을 생성
+    /// </summary>
+    public async Task<string> GenerateReplyWithHistoryAsync(
+        string personaInstruction,
+        string lang,
+        IReadOnlyList<CachedMessage> history,
+        string userMessage)
     {
         var googleAi = new GoogleAI(apiKey: _apiKey);
 
@@ -25,7 +32,25 @@ public class GeminiService
             systemInstruction: new Content(combinedSystemInstruction)
         );
 
-        var response = await model.GenerateContent(userMessage);
+        // 슬라이딩 윈도우: 최근 최대 20개의 메시지 히스토리 조립
+        var contents = new List<Content>();
+
+        var window = history.TakeLast(20);
+        foreach (var msg in window)
+        {
+            string role = msg.SenderType.Equals("AI", StringComparison.OrdinalIgnoreCase) ? "model" : "user";
+            contents.Add(new Content(msg.Content, role));
+        }
+
+        // 현재 사용자 입력 추가
+        contents.Add(new Content(userMessage, "user"));
+
+        var request = new GenerateContentRequest
+        {
+            Contents = contents
+        };
+
+        var response = await model.GenerateContent(request);
         return response.Text ?? "No response.";
     }
 }

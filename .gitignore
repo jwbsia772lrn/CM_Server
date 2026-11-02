@@ -1,3 +1,111 @@
-bin/
-obj/
-appsettings.Development.json
+## =========================================================================
+## 1. 보안 & 민감 정보 (Security, Credentials, and Secrets)
+## =========================================================================
+# ASP.NET Core 환경별 설정 파일 (실제 DB 연결 문자열, API 키 등 포함)
+appsettings.*.json
+!appsettings.json
+!appsettings.template.json
+!appsettings.example.json
+
+# 개발자/로컬 환경 비밀 파일
+*.secrets.json
+*.Local.json
+*.Development.json
+*.Production.json
+
+# 환경 변수 파일
+.env
+.env.*
+!.env.example
+
+# 오라클 전자지갑 (Oracle Cloud Wallet - Autonomous Database 보안 자격증명)
+[Ww]allet/
+[Ww]allet_*/
+Wallet*.zip
+*.sso
+*.p12
+*.ora
+ojdbc.properties
+
+# 인증서 및 개인 키
+*.pfx
+*.p12
+*.key
+*.pem
+*.cer
+*.crt
+*.der
+*.pkcs12
+
+# 데이터베이스 로컬 파일 및 백업
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.sqlite
+*.sqlite3
+*.slnx.sqlite
+
+## =========================================================================
+## 2. Visual Studio 및 IDE 설정 / 캐시
+## =========================================================================
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vsidx
+DesignTimeBuild/
+FileContentIndex/
+ProjectEvaluation/
+.vssettings
+
+# Visual Studio Code 개인 설정
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+## =========================================================================
+## 3. 빌드 산출물 및 임시 파일 (Build Artifacts & Binaries)
+## =========================================================================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+[Tt]est[Rr]esults/
+[Pp]ublish/
+
+# NuGet 패키지 및 복원 파일
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+
+# 컴파일러 및 프로파일러 로그/임시 파일
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+## =========================================================================
+## 4. 운영체제 생성 파일 (OS-Generated Files)
+## =========================================================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
